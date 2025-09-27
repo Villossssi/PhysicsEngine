@@ -42,8 +42,8 @@ export default function ElasticCollision(
   const v1n = vA.x * Math.cos(alpha) + vA.y * Math.sin(alpha);
   const v2n = vB.x * Math.cos(alpha) + vB.y * Math.sin(alpha);
   ///////////////////////// VEL TAN  /////////////////////////
-  const v1t = -vA.x * Math.sin(alpha) + -vA.y * Math.cos(alpha);
-  const v2t = -vB.x * Math.sin(alpha) + -vB.y * Math.cos(alpha);
+  const v1t = -vA.x * Math.sin(alpha) + vA.y * Math.cos(alpha);
+  const v2t = -vB.x * Math.sin(alpha) + vB.y * Math.cos(alpha);
   ///////////////////////// VEL NOR FINALE /////////////////////////
   const V1NF = ((mA - mB) * v1n + 2 * mB * v2n) / (mA + mB);
   const V2NF = ((mB - mA) * v2n + 2 * mA * v1n) / (mA + mB);
@@ -62,7 +62,7 @@ export default function ElasticCollision(
   const dV2t = -f / mB;
   ///////////////////////// DELTA VEL ANG  /////////////////////////
   const dw1 = (-f * (RBA.getBounds() as ICircleCollisionInfo).radius) / I1;
-  const dw2 = (f * (RBB.getBounds() as ICircleCollisionInfo).radius) / I1;
+  const dw2 = (f * (RBB.getBounds() as ICircleCollisionInfo).radius) / I2;
   ///////////////////////// VEL TANG FINALE /////////////////////////
   const V1TF = v1t + dV1t;
   const V2TF = v2t + dV2t;
@@ -85,7 +85,6 @@ export default function ElasticCollision(
   RBB.vel.y = V2YF;
   RBA.rotVel = W1F;
   RBB.rotVel = W2F;
-  debugger;
 
   return;
 }

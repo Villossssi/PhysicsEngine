@@ -81,6 +81,12 @@ export class Vec2 {
   clone(): Vec2 {
     return new Vec2(this.x, this.y);
   }
+
+  distance(other: Vec2): number {
+    const dx = this.x - other.x;
+    const dy = this.y - other.y;
+    return Math.sqrt(dx * dx + dy * dy);
+  }
 }
 
 // ---------- CANVAS & STATO ----------
@@ -176,17 +182,40 @@ let grid: { [key: string]: Node2D[] } = {}; // { "0,0": [obj1, obj2], ... }
 // In questi hook inserirai la tua logica.
 function initScene(): void {
   world.cleanWorldObj();
-  world.addObj(
-    new Ball(
-      new Vec2(state.width / 2 - 200, state.height / 4 + 25),
-      new Vec2(30),
-      20,
-      false
-    )
-  );
-  world.addObj(
-    new Ball(new Vec2(state.width / 2, state.height / 4), new Vec2(-520), 20)
-  );
+  // Spawnare 100 palline con posizioni e velocità casuali
+  const ballRadius = 16;
+  const numBalls = 100;
+  const spawnedBalls: Ball[] = [];
+
+  for (let i = 0; i < numBalls; i++) {
+    let position: Vec2,
+      attempts = 0;
+    const maxAttempts = 50;
+
+    // Trova una posizione valida senza sovrapposizioni
+    do {
+      position = new Vec2(
+        Math.random() * (state.width - ballRadius * 2) + ballRadius,
+        Math.random() * (state.height - ballRadius * 2) + ballRadius
+      );
+      attempts++;
+    } while (
+      attempts < maxAttempts &&
+      spawnedBalls.some(
+        (ball) => position.distance(ball.pos) < ballRadius * 2 + 5 // 5px di margine extra
+      )
+    );
+
+    // Velocità casuale
+    const velocity = new Vec2(
+      (Math.random() - 0.5) * 600, // velocità X tra -300 e 300
+      (Math.random() - 0.5) * 600 // velocità Y tra -300 e 300
+    );
+
+    const ball = new Ball(position, velocity, ballRadius);
+    spawnedBalls.push(ball);
+    world.addObj(ball);
+  }
 }
 
 function applyForces(obj: Node2D, dt: number): void {}
