@@ -1,3 +1,4 @@
+import { ShapeType } from "../Enum/ShapeType";
 import {
   IShape,
   ICircleCollisionInfo,
@@ -8,7 +9,7 @@ export default function gjkCollision(
   shapeA: IShapeCollisionInfo,
   shapeB: IShapeCollisionInfo
 ): boolean {
-  if (shapeA.type === "circle" && shapeB.type === "circle") {
+  if (shapeA.type === ShapeType.Circle && shapeB.type === ShapeType.Circle) {
     const circleA = shapeA as ICircleCollisionInfo;
     const circleB = shapeB as ICircleCollisionInfo;
     const dx = circleA.x - circleB.x;

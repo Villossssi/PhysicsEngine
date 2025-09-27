@@ -44,10 +44,7 @@ export class GameObject extends Node2D implements IGameObject {
       this.pos.x + this.vel.x * dt * world.damping + this.acc.x * dt * dt;
     let ny =
       this.pos.y + this.vel.y * dt * world.damping + this.acc.y * dt * dt;
-    let r =
-      this.rot +
-      (this.rot - this.prevRot) * world.damping +
-      this.rotAcc * dt * dt;
+    let r = this.rot + this.rotVel * dt * world.damping + this.rotAcc * dt * dt;
 
     let prevX = this.pos.x;
     let prevY = this.pos.y;

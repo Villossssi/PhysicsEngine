@@ -1,7 +1,8 @@
+import { ShapeType } from "../Enum/ShapeType";
 import { GameObject } from "../GameObject";
 
 export interface IShapeCollisionInfo {
-  type: "circle";
+  type: ShapeType;
   x: number;
   y: number;
 }

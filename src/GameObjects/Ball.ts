@@ -1,3 +1,4 @@
+import { ShapeType } from "../Enum/ShapeType";
 import { Vec2, world } from "../main";
 import { RigidBody2D } from "../RigidBody2D";
 import { ICircleCollisionInfo } from "../Shapes/Shape";
@@ -59,7 +60,7 @@ export default class Ball extends RigidBody2D {
 
   override getBounds(): ICircleCollisionInfo | null {
     return {
-      type: "circle",
+      type: ShapeType.Circle,
       x: this.pos.x,
       y: this.pos.y,
       radius: this.radius,
